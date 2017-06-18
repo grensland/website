@@ -7,6 +7,7 @@ node_js:
 branches:
   only:
   - master
+  - develop
 dist: trusty
 node_js:
   - "6.9.5"
@@ -18,7 +19,14 @@ script:
   - ng build --prod
 
 after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
+  - if [ $TRAVIS_BRANCH == "develop" ];
+    then firebase use grensland-site-dev;
+    else firebase use --clear;
+    fi
+  - if [ $TRAVIS_BRANCH == "develop" ];
+    then firebase deploy --token $FIREBASE_TOKEN_DEV;
+    else firebase deploy --token $FIREBASE_TOKEN;
+    fi
 
 notifications:
   email:
