@@ -18,7 +18,12 @@ script:
   - ng build --prod
 
 after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
+  - if [ $TRAVIS_BRANCH == "develop" ];
+    then firebase deploy --token $FIREBASE_TOKEN_DEV
+    fi
+  - if [ $TRAVIS_BRANCH == "master" ];
+    then firebase deploy --token $FIREBASE_TOKEN
+    fi
 
 notifications:
   email:
