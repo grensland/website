@@ -23,10 +23,6 @@ after_success:
     then firebase use grensland-site-dev;
     else firebase use --clear;
     fi
-  - if [ $TRAVIS_BRANCH == "develop" ];
-    then firebase deploy --token $FIREBASE_TOKEN_DEV;
-    else firebase deploy --token $FIREBASE_TOKEN;
-    fi
 
 notifications:
   email:
