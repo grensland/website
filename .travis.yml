@@ -23,6 +23,7 @@ after_success:
     then firebase use grensland-site-dev;
     else firebase use --clear;
     fi
+  - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
   email:
