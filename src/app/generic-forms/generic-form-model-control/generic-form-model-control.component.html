@@ -1,0 +1,7 @@
+<div [ngSwitch]="formControlModel.controlType">
+  <div *ngSwitchCase="'textarea'">
+  </div>
+  <div *ngSwitchDefault>
+    {{formControlModel.id}} - {{formControlModel.type}} - {{formControlModel.label}} - {{formControlModel.value}}
+  </div>
+</div>

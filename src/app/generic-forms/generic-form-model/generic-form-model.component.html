@@ -1,0 +1,24 @@
+<form [formGroup]="formVal" (ngSubmit)="formVal.valid && submitFunc()" novalidate>
+  <div *ngFor="let item of formDef">
+    <div [ngSwitch]="item.type">
+      <div *ngSwitchCase="'FormGroup'">
+        <app-generic-form-model-group [formCollectionModel]="item"></app-generic-form-model-group>
+      </div>
+
+      <div *ngSwitchCase="'FormArray'">
+        <app-generic-form-model-array [formCollectionModel]="item"></app-generic-form-model-array>
+      </div>
+
+      <div *ngSwitchCase="'FormControl'">
+        <app-generic-form-model-control [formControlModel]="item"></app-generic-form-model-control>
+      </div>
+
+    </div>
+  </div>
+
+
+  <md-card-actions>
+    <button md-raised-button color="primary" type="submit" [disabled]="!formVal.valid">Save</button>
+    <button md-button type="button" (click)="cancelFunc()">Cancel</button>
+  </md-card-actions>
+</form>
