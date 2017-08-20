@@ -1,0 +1,91 @@
+<form [formGroup]="formVal" (ngSubmit)="formVal.valid && submitFunc()" novalidate>
+  <ng-template ngFor let-item [ngForOf]="formDef" let-index="index">
+    <div [ngSwitch]="item.type">
+      <div *ngSwitchCase="'formGroup'">
+        <div [formGroupName]="item.id">
+          <ng-template ngFor let-item [ngForOf]="item.children" let-index="itx">
+            <p class="inputParagraph">
+
+              <md-input-container>
+                {{item.type}} - {{item.label}}
+                <!--<input mdInput [type]="item.type" placeholder="{{item.label}}" [required]="item.required"-->
+                       <!--[formControlName]="item.id">-->
+              </md-input-container>
+
+              <!--<md-input [type]="item.type" placeholder="{{item.label}}" [required]="item.required"-->
+                        <!--[formControlName]="item.id">-->
+                <!--<md-hint *ngIf="item.error || (formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].errors !== null)">-->
+                  <!--<span *ngIf="item.error"> {{item.error}}</span>-->
+                  <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('required')">This field is required</span>-->
+                  <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('minLength')">This field is not long enough</span>-->
+                  <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('maxLength')">Maximun length exceeded</span>-->
+                  <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('pattern')">Invalid value</span>-->
+                <!--</md-hint>-->
+              <!--</md-input>-->
+            </p>
+          </ng-template>
+        </div>
+      </div>
+      <div *ngSwitchCase="'select'">
+        <div *ngIf="item.role==='ADMIN'">
+          <p class="label" [class.required]="item.required">{{item.label}}</p>
+          <select [formControlName]="item.id" class="select" (change)="item.callback($event)">
+            <option value="">Choose a {{ item.label }}</option>
+            <ng-template ngFor let-option [ngForOf]="item.list">
+              <option value="{{option.uuid}}" selected="(this.value === option.uuid) ? true : false">{{option[item.visibleField]}}</option>
+            </ng-template>
+          </select>
+        </div>
+      </div>
+      <div *ngSwitchCase="'selectSingleString'">
+        <p class="label" [class.required]="item.required">{{item.label}}</p>
+        <select  [formControlName]="item.id" class="select">
+          <option *ngIf="!item.required" value="" selected="true" >Choose a {{ item.label }}</option>
+          <ng-template ngFor let-option [ngForOf]="item.list" let-i="index">
+            <option value="{{option}}" selected="(this.value === option) ? true : false" >{{option}}</option>
+          </ng-template>
+        </select>
+      </div>
+      <div *ngSwitchCase="'checkbox'">
+        <md-checkbox [required]="item.required"
+                     [formControlName]="item.id"> {{item.label}}
+        </md-checkbox>
+      </div>
+      <div *ngSwitchCase="'textarea'">
+        <md-input-container>
+          <textarea md-input [placeholder]="item.label" [formControlName]="item.id" [required]="item.required" rows="5" cols="50"></textarea>
+          <md-hint [hidden]="!item.error">
+            <span [hidden]="!item.error">{{item.error}}</span>
+          </md-hint>
+        </md-input-container>
+      </div>
+      <div *ngSwitchCase="'imageUpload'">
+        <p class="label" [class.required]="item.required">{{item.label}}</p>
+        <input type="file" accept="image/*" (change)="item.callback($event)">
+        <md-hint [hidden]="!item.error">
+          <span [hidden]="!item.error">{{item.error}}</span>
+        </md-hint>
+      </div>
+      <div *ngSwitchDefault>
+        <p class="inputParagraph">
+          {{item.type}} - {{item.label}}
+          <!--<md-input [type]="item.type" placeholder="{{item.label}}" [required]="item.required"-->
+                    <!--[formControlName]="item.id">-->
+            <!--<md-hint *ngIf="item.error || (formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].errors !== null)">-->
+              <!--<span *ngIf="item.error"> {{item.error}}</span>-->
+              <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('required')">This field is required</span>-->
+              <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('minlength')">This field is not long enough</span>-->
+              <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('maxlength')">Maximun length exceeded</span>-->
+              <!--<span *ngIf="formVal.controls[item.id] && formVal.controls[item.id].touched && formVal.controls[item.id].hasError('pattern')">Invalid value</span>-->
+            <!--</md-hint>-->
+          <!--</md-input>-->
+        </p>
+      </div>
+    </div>
+  </ng-template>
+
+  <md-card-actions>
+    <button md-raised-button color="primary" type="submit" [disabled]="!formVal.valid">Save</button>
+    <button md-button type="button" (click)="cancelFunc()">Cancel</button>
+  </md-card-actions>
+</form>

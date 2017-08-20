@@ -1,0 +1,16 @@
+<div *ngFor="let child of formCollectionModel.children">
+  <div [ngSwitch]="child.type">
+    <div *ngSwitchCase="'FormGroup'">
+      <app-generic-form-model-group [formCollectionModel]="child"></app-generic-form-model-group>
+    </div>
+
+    <div *ngSwitchCase="'FormArray'">
+      <app-generic-form-model-array [formCollectionModel]="child"></app-generic-form-model-array>
+    </div>
+
+    <div *ngSwitchCase="'FormControl'">
+      <app-generic-form-model-control [formControlModel]="child"></app-generic-form-model-control>
+    </div>
+
+  </div>
+</div>

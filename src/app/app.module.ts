@@ -3,12 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+import 'hammerjs';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AngularMaterialModule} from "./angular-material/angular-material.module";
+import {GenericFormsModule} from "./generic-forms/generic-forms.module";
+import { PlayComponent } from './play/play.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PlayComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    GenericFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
